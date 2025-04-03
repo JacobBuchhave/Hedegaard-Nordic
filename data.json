@@ -1,0 +1,14 @@
+{
+    "types": ["Type A", "Type B"],
+    "dimensions": ["Dimension 1", "Dimension 2"],
+    "data": {
+        "Group 1": [
+            ["Row Key", "Dimension 1", "Type A", "More Data", "Package No 1", 0, 1.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5.0, 3.0, 1.5],
+            ["Row Key", "Dimension 1", "Type A", "More Data", "Package No 2", 0, 2.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5.5, 3.5, 2.5]
+        ],
+        "Group 2": [
+            ["Row Key", "Dimension 2", "Type B", "More Data", "Package No 3", 0, 3.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6.0, 4.0, 3.0]
+        ]
+    },
+    "last_update": "2023-10-12 14:00"
+}
