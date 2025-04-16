@@ -1,0 +1,16 @@
+{
+  "name": "hedegaard-nordic",
+  "version": "1.0.0",
+  "description": "A simple Vercel project using Axios to fetch data.",
+  "scripts": {
+    "dev": "vercel dev",          // Starts your application locally for development
+    "start": "vercel start",      // Optional, can be used to start a production server
+    "deploy": "vercel"            // Not typically needed for Git-based deployments
+  },
+  "dependencies": {
+    "axios": "^0.21.4"            // Use the latest stable version of Axios
+  },
+  "engines": {
+    "node": "18.x"                // Specify the Node.js version for Vercel
+  }
+}
