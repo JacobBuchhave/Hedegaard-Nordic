@@ -41,6 +41,7 @@ async function getBcToken() {
     const tokenUrl = 'https://login.microsoftonline.com/35fea29a-3272-4b89-acb9-ab42362ca62a/oauth2/v2.0/token';
     
     try {
+        console.log("Requesting OAuth token...");
         const response = await axios.post(tokenUrl, new URLSearchParams({
             client_id: clientId,
             client_secret: clientSecret,
@@ -50,6 +51,7 @@ async function getBcToken() {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
 
+        console.log("Token received:", response.data.access_token); // Log successful token retrieval
         return response.data.access_token;
     } catch (error) {
         console.error("Failed to retrieve token:", error.response?.data || error);
@@ -61,6 +63,7 @@ async function getBcResults(token) {
     const url = 'https://api.businesscentral.dynamics.com/v2.0/35fea29a-3272-4b89-acb9-ab42362ca62a/Hedegaard/ODataV4/PackageTreeDataTransfer_GetData?company=77d82903-1f22-ee11-9cbf-002248896a2c';
 
     try {
+        console.log("Fetching data from Business Central...");
         const response = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
