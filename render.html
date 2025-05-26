@@ -1,0 +1,119 @@
+<html>
+    <head>
+
+    </head>
+<body>
+
+    <div class="data-table-wrapper" id="data-table-container">
+        <div class="data-table-filters">
+            <div class="data-table-filter">
+                <label for="filter_type">Vælg type</label>
+                <select class="data-table-filter-type" id="filter_type">
+                    <option value="">Vælg type</option>
+                </select>
+
+            </div>
+
+            <div class="data-table-filter">
+                <label for="filter_dimension">Vælg dimension</label>
+                <select class="data-table-filter-dimension" id="filter_dimension">
+                    <option value="">Vælg dimension</option>
+                </select>
+                <a href="#" class="reset-filter-select">Nulstil alle valg</a>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        async function packagetree() {
+            const response = await fetch("https://hedegaard-nordic-eta.vercel.app/api/packagetree")
+            .then((response) => {
+                return response.json()
+            })
+            .then((bcResponse) => {
+                const data = bcResponse.data;
+                const types = data.types;
+                const dimensions = data.dimensions;
+                const items = data.items;
+
+                let typesSelect = document.getElementById('filter_type');
+                types.forEach(type => {
+                    var option = document.createElement('option');
+                    option.value = type;
+                    option.innerHTML = type;
+                    typesSelect.appendChild(option)
+                });
+                typesSelect.addEventListener("change", (selectedType) => {
+                    console.log(selectedType)
+                })
+
+                let dimensionsSelect = document.getElementById('filter_dimension');
+                dimensions.forEach(dimension => {
+                    var option = document.createElement('option');
+                    option.value = dimension;
+                    option.innerHTML = dimension;
+                    dimensionsSelect.appendChild(option)
+                });
+
+                const table = document.createElement('div');
+                table.classList.add('data-table');
+
+                items.forEach(item => {
+                    table.innerHTML += `
+                        <div class="data-group-wrapper" data-dimension="${item.dimension}" data-type="${item.WebCategory}">
+                            <div class="data-group-header">${item.desc}</div>
+                            <div class="data-group-scroll">
+                                <div class="data-group">
+                                    <div class="data-group-row-header">
+                                        <div class="data-group-row-dimensions">Dimension</div>
+                                        <div class="data-group-row-no">Pakkenr.</div>
+                                        <div class="data-group-row-specifications">
+                                            <div class="data-group-row-specifications-column-header">Specifikation</div>
+                                            <div class="data-group-row-specifications-columns">
+                                                ${Object.keys(item.packages[0].specification).map((specification) => {
+                                                    return `<div class="data-group-row-specifications-column">${specification}</div>`
+                                                }).join("")}
+                                            </div>
+                                        </div>
+                                        <div class="data-group-row-specifications-m3">M<small>3</small></div>
+                                    </div>
+                                        ${Object.keys(item.packages).map((package, packageIndex) => {
+                                            console.log(package)
+                                            return `
+                                                <div class="data-group-row">
+                                                    <div class="data-group-row-dimensions value-column">${item.dimension}</div>
+                                                    <div class="data-group-row-no value-column">${item.packages[packageIndex].packageNo}</div>
+                                                    <div class="data-group-row-specifications value-column">
+                                                        <div class="data-group-row-specifications-columns">
+                                                            ${Object.values(item.packages[packageIndex].specification).map((quantity) => {
+                                                                return `<div class="data-group-row-specifications-column">${quantity}</div>`
+                                                            }).join("")}
+                                                        </div>
+                                                    </div>
+                                                    <div class="data-group-row-specifications-m3 value-column">${item.packages[packageIndex].m3}</div>
+                                                </div>
+                                            `
+                                        }).join("")}
+                                    <div class="data-group-m3-subtotal">
+                                        <div class="data-group-m3-subtotal-label">Subtotal kubikmeter:</div>
+                                        <div class="data-group-m3-subtotal-value">${item.total}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                });
+
+                document.getElementById('data-table-container').appendChild(table)
+            })
+        }
+
+        packagetree()
+
+
+    </script>
+</body>
+</html>
